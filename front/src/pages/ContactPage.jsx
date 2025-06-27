@@ -1,7 +1,8 @@
-// src/pages/ContactPage.jsx
 import React, { useState } from 'react';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
 import useContent from '../hooks/useContent';
+import axios from 'axios';
+import axiosApi from "../axiosApi";
 
 const ContactPage = () => {
     const content = useContent();
@@ -11,6 +12,9 @@ const ContactPage = () => {
         phone: '',
         message: ''
     });
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(null);
 
     if (!content) {
         return <Container className="text-center my-5">Загрузка...</Container>;
@@ -20,11 +24,21 @@ const ContactPage = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Отправка формы:', formData);
-        alert('Сообщение отправлено! Мы свяжемся с вами в ближайшее время.');
-        setFormData({ name: '', email: '', phone: '', message: '' });
+        setLoading(true);
+        setError(null);
+        setSuccess(null);
+
+        try {
+            const response = await axiosApi.post('/feedback', formData);
+            setSuccess(response.data.message || 'Сообщение успешно отправлено!');
+            setFormData({ name: '', email: '', phone: '', message: '' });
+        } catch (err) {
+            setError(err.response?.data?.message || 'Ошибка при отправке сообщения. Пожалуйста, попробуйте еще раз.');
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -34,18 +48,17 @@ const ContactPage = () => {
                 <Col md={6} className="mb-4 mb-md-0">
                     <h2 className="text-secondary">Свяжитесь с нами</h2>
                     <p>
-                        **Адрес:** {content.contacts.address} [cite: 8]
+                        **Адрес:** {content.contacts.address}
                         <br />
-                        **Телефон:** {content.contacts.phone} [cite: 8]
+                        **Телефон:** {content.contacts.phone}
                         <br />
-                        **Email:** {content.contacts.email} [cite: 8]
+                        **Email:** {content.contacts.email}
                     </p>
 
                     <h3 className="text-secondary mt-4">Мы на карте</h3>
                     <div className="embed-responsive embed-responsive-16by9" style={{ height: '400px' }}>
-                        {/* Используйте Google Maps Embed API или просто изображение карты [cite: 9] */}
                         <img
-                            src={`/images/${content.contacts.mapImage}`} // Убедитесь, что изображение карты находится в public/images
+                            src={`/images/${content.contacts.mapImage}`}
                             alt="Карта местоположения"
                             className="img-fluid rounded shadow"
                             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
@@ -54,6 +67,8 @@ const ContactPage = () => {
                 </Col>
                 <Col md={6}>
                     <h2 className="text-secondary">Отправьте нам сообщение</h2>
+                    {success && <Alert variant="success">{success}</Alert>}
+                    {error && <Alert variant="danger">{error}</Alert>}
                     <Form onSubmit={handleSubmit}>
                         <Form.Group className="mb-3" controlId="formName">
                             <Form.Label>Ваше имя</Form.Label>
@@ -103,8 +118,8 @@ const ContactPage = () => {
                             />
                         </Form.Group>
 
-                        <Button variant="primary" type="submit">
-                            Отправить сообщение
+                        <Button variant="primary" type="submit" disabled={loading}>
+                            {loading ? 'Отправка...' : 'Отправить сообщение'}
                         </Button>
                     </Form>
                 </Col>

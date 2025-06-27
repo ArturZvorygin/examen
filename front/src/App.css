@@ -2,32 +2,56 @@
 
 /* Общие стили */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f8f9fa; /* Светлый фон */
+  font-family: 'Montserrat', sans-serif; /* Более современный шрифт */
+  background-color: #e6f2f8; /* Очень светлый, почти белый фон с легким голубым оттенком */
+  color: #333;
 }
+
+/* Импорт шрифтов */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"); /* Иконки Font Awesome */
 
 /* Навигация */
 .navbar-brand {
-  font-weight: bold;
-  font-size: 1.8rem;
-  color: #007bff !important; /* Яркий синий для бренда */
+  font-weight: 700;
+  font-size: 2rem;
+  color: #0056b3 !important; /* Насыщенный синий */
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* Легкая тень для текста логотипа */
 }
 
 .nav-link {
-  font-weight: 500;
-  margin-right: 15px;
-  color: rgba(255, 255, 255, 0.75) !important;
-  transition: color 0.3s ease;
+  font-weight: 600;
+  margin-right: 20px;
+  color: rgba(255, 255, 255, 0.8) !important;
+  transition: color 0.3s ease, transform 0.2s ease;
+  position: relative;
 }
 
 .nav-link:hover {
   color: #ffffff !important;
+  transform: translateY(-2px); /* Небольшой эффект при наведении */
+}
+
+.nav-link::after { /* Подчеркивание при наведении */
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 3px;
+  background: #28a745; /* Яркий акцентный зеленый */
+  bottom: -5px;
+  left: 0;
+  transition: width 0.3s ease-in-out;
+}
+
+.nav-link:hover::after {
+  width: 100%;
 }
 
 /* Секции заголовков */
 h1, h2, h3, h4, h5, h6 {
-  color: #343a40; /* Темный текст для заголовков */
-  font-weight: 600;
+  color: #212529; /* Почти черный для контраста */
+  font-weight: 700;
+  margin-bottom: 1.5rem;
 }
 
 .text-primary {
@@ -35,52 +59,68 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .text-secondary {
-  color: #6c757d !important; /* Серый */
+  color: #6c757d !important;
 }
 
 .text-info {
-  color: #17a2b8 !important; /* Бирюзовый */
+  color: #17a2b8 !important;
 }
 
 .text-success {
-  color: #28a745 !important; /* Зеленый */
+  color: #28a745 !important;
 }
 
 /* Карточки */
 .card {
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease-in-out;
+  border-radius: 15px; /* Больший радиус скругления */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Более выраженная тень */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  border: none; /* Убираем стандартную рамку */
 }
 
 .card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-8px); /* Более заметное поднятие при наведении */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
 }
 
 /* Кнопки */
 .btn-primary {
   background-color: #007bff;
   border-color: #007bff;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+  font-weight: 600;
+  border-radius: 8px; /* Скругленные углы */
+  padding: 10px 25px;
 }
 
 .btn-primary:hover {
   background-color: #0056b3;
   border-color: #0056b3;
+  transform: translateY(-2px);
 }
 
 .btn-outline-primary {
   color: #007bff;
   border-color: #007bff;
   transition: all 0.3s ease;
+  font-weight: 600;
+  border-radius: 8px;
 }
 
 .btn-outline-primary:hover {
   background-color: #007bff;
   color: #fff;
+  transform: translateY(-2px);
 }
 
 /* Формы */
+.form-control {
+  border-radius: 8px;
+  border: 1px solid #ced4da;
+  padding: 10px 15px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
 .form-control:focus {
   border-color: #80bdff;
   box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
@@ -88,28 +128,29 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Изображения */
 .img-fluid {
-  max-width: 100%;
-  height: auto;
+  border-radius: 10px; /* Скругление углов для изображений */
 }
 
 /* Футер */
 footer {
-  background-color: #343a40 !important; /* Темный фон футера */
+  background-color: #212529 !important; /* Более темный фон футера */
   color: #e9ecef;
+  padding: 30px 0;
 }
 
 footer h5 {
-  color: #007bff; /* Яркий синий для заголовков футера */
-  margin-bottom: 15px;
+  color: #007bff;
+  margin-bottom: 20px;
 }
 
 footer a {
   color: #e9ecef;
   text-decoration: none;
+  transition: color 0.3s ease;
 }
 
 footer a:hover {
-  color: #007bff;
+  color: #28a745; /* Акцентный зеленый для ссылок в футере */
 }
 
 /* Дополнительные стили для секций */
@@ -119,7 +160,28 @@ footer a:hover {
 
 .bg-info {
   background-color: #17a2b8 !important;
+  color: #fff; /* Белый текст на бирюзовом фоне */
+  border-radius: 15px;
+  padding: 3rem;
+  text-align: center;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
-/* Иконки Font Awesome (если используются) */
-@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css");
+/* Стили для секции Hero на главной странице */
+.align-items-center.bg-light {
+  background: linear-gradient(135deg, #f0f8ff, #e6f2ff); /* Градиентный фон */
+  padding: 4rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.display-4.text-primary {
+  font-size: 3.5rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.lead {
+  font-size: 1.25rem;
+  color: #555;
+}
