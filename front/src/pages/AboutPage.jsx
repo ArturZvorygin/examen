@@ -1,33 +1,73 @@
+// src/pages/AboutPage.jsx
+import React from 'react';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 import useContent from '../hooks/useContent';
 
-function AboutPage() {
-    const { team, reviews } = useContent();
+const AboutPage = () => {
+    const content = useContent();
+
+    if (!content) {
+        return <Container className="text-center my-5">Загрузка...</Container>;
+    }
 
     return (
-        <div className="p-4 space-y-12 max-w-5xl mx-auto">
-            <section className="bg-white p-6 rounded-lg shadow-md">
-                <h2 className="text-2xl font-bold mb-4 text-blue-900">Наша команда</h2>
-                <p className="text-gray-700 whitespace-pre-line leading-relaxed mb-6">{team.description}</p>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {team.images.map((img, index) => (
-                        <img key={index} src={`/assets/${img}`} alt={`Команда ${index}`} className="rounded shadow-md" />
-                    ))}
-                </div>
-            </section>
+        <Container className="my-5">
+            <h1 className="text-center mb-4 text-primary">О нас</h1>
+            <Row className="mb-5">
+                <Col>
+                    <p className="lead text-center">{content.company}</p>
+                </Col>
+            </Row>
 
-            <section className="bg-blue-50 p-6 rounded-lg shadow-md">
-                <h2 className="text-2xl font-bold mb-4 text-blue-900">Отзывы клиентов</h2>
-                <ul className="space-y-6">
-                    {reviews.map((review, index) => (
-                        <li key={index} className="border-l-4 border-blue-400 pl-4">
-                            <p className="font-semibold text-blue-800">{review.name}</p>
-                            <p className="text-gray-600 italic">“{review.text}”</p>
-                        </li>
-                    ))}
-                </ul>
-            </section>
-        </div>
+            {/* Информация о команде [cite: 4] */}
+            <h2 className="text-center mb-4 text-secondary">Наша команда профессионалов</h2>
+            <Row className="g-4 mb-5 justify-content-center">
+                {content.team.images.map((image, index) => (
+                    <Col md={4} key={index}>
+                        <Card className="h-100 shadow-sm border-0">
+                            <Card.Img
+                                variant="top"
+                                src={`/images/${image}`} // Убедитесь, что изображения находятся в папке public/images
+                                alt={`Команда ${index + 1}`}
+                                style={{ height: '250px', objectFit: 'cover' }}
+                            />
+                            <Card.Body>
+                                <Card.Title className="text-center text-primary">Специалист #{index + 1}</Card.Title>
+                                <Card.Text className="text-muted text-center">
+                                    {/* Здесь можно добавить описание роли, если оно есть в данных */}
+                                </Card.Text>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                ))}
+            </Row>
+            <Row className="mb-5">
+                <Col>
+                    <p className="text-center">{content.team.description}</p>
+                </Col>
+            </Row>
+
+
+            {/* Отзывы клиентов [cite: 4] */}
+            <h2 className="text-center mb-4 text-secondary">Отзывы наших клиентов</h2>
+            <Row className="g-4">
+                {content.reviews.map((review, index) => (
+                    <Col md={6} key={index}>
+                        <Card className="h-100 shadow-sm border-0 bg-light">
+                            <Card.Body>
+                                <blockquote className="blockquote mb-0">
+                                    <p className="mb-0">"{review.text}"</p>
+                                    <footer className="blockquote-footer mt-2">
+                                        {review.name}
+                                    </footer>
+                                </blockquote>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                ))}
+            </Row>
+        </Container>
     );
-}
+};
 
 export default AboutPage;

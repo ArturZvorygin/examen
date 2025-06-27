@@ -1,19 +1,34 @@
+// src/pages/BlogPage.jsx
+import React from 'react';
+import {Container, Row, Col, Card, Button} from 'react-bootstrap';
 import useContent from '../hooks/useContent';
 
-function BlogPage() {
-    const { blog } = useContent();
+const BlogPage = () => {
+    const content = useContent();
+
+    if (!content) {
+        return <Container className="text-center my-5">Загрузка...</Container>;
+    }
 
     return (
-        <div className="p-4 space-y-6 max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold text-blue-800 text-center mb-6">Блог</h2>
-            {blog.map((post, index) => (
-                <div key={index} className="bg-white p-6 rounded-lg shadow-md">
-                    <h3 className="text-xl font-semibold text-blue-700 mb-2">{post.title}</h3>
-                    <p className="text-gray-700 whitespace-pre-line leading-relaxed">{post.content}</p>
-                </div>
-            ))}
-        </div>
+        <Container className="my-5">
+            <h1 className="text-center mb-4 text-primary">Наш блог</h1>
+            <Row className="g-4">
+                {content.blog.map((post, index) => (
+                    <Col md={6} key={index}>
+                        <Card className="h-100 shadow-sm border-0">
+                            <Card.Body>
+                                <Card.Title className="text-primary">{post.title}</Card.Title> {/* Статьи и советы  */}
+                                <Card.Text>{post.content}</Card.Text>
+                                {/* Здесь можно добавить возможность комментирования и подписки на обновления  */}
+                                <Button variant="outline-primary" size="sm">Читать далее</Button>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                ))}
+            </Row>
+        </Container>
     );
-}
+};
 
 export default BlogPage;

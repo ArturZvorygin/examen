@@ -1,29 +1,33 @@
-import { Link, useLocation } from 'react-router-dom';
+// src/components/Header.jsx
+import React from 'react';
+import { Navbar, Nav, Container } from 'react-bootstrap';
+import useContent from '../hooks/useContent';
 
-function Header() {
-    const { pathname } = useLocation();
+const Header = () => {
+    const content = useContent();
 
-    const linkClass = (path) =>
-        `text-sm font-medium transition ${
-            pathname === path ? 'text-blue-700 underline' : 'text-gray-600 hover:text-blue-500'
-        }`;
+    if (!content) {
+        return null; // Или загрузочный спиннер
+    }
 
     return (
-        <header className="p-4 bg-white shadow flex justify-between items-center sticky top-0 z-50">
-            <div className="flex items-center gap-3">
-                <img src="/assets/002-1.png" alt="Логотип" className="w-10 h-10" />
-                <h1 className="text-2xl font-bold text-blue-900">Мастерская Ванных</h1>
-            </div>
-            <nav className="flex gap-5">
-                <Link to="/" className={linkClass('/')}>Главная</Link>
-                <Link to="/about" className={linkClass('/about')}>О нас</Link>
-                <Link to="/services" className={linkClass('/services')}>Услуги</Link>
-                <Link to="/gallery" className={linkClass('/gallery')}>Галерея</Link>
-                <Link to="/blog" className={linkClass('/blog')}>Блог</Link>
-                <Link to="/contact" className={linkClass('/contact')}>Контакты</Link>
-            </nav>
-        </header>
+        <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
+            <Container>
+                <Navbar.Brand href="/">{content.company.split(',')[0]}</Navbar.Brand> {/* Логотип компании  */}
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="ms-auto">
+                        <Nav.Link href="/">Главная</Nav.Link>
+                        <Nav.Link href="/about">О нас</Nav.Link>
+                        <Nav.Link href="/services">Услуги</Nav.Link>
+                        <Nav.Link href="/gallery">Галерея</Nav.Link>
+                        <Nav.Link href="/blog">Блог</Nav.Link>
+                        <Nav.Link href="/contacts">Контакты</Nav.Link>
+                    </Nav>
+                </Navbar.Collapse>
+            </Container>
+        </Navbar>
     );
-}
+};
 
 export default Header;

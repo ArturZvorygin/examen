@@ -1,21 +1,59 @@
+// src/pages/GalleryPage.jsx
+import React, { useState } from 'react';
+import { Container, Row, Col, Image, Button, ButtonGroup } from 'react-bootstrap';
 import useContent from '../hooks/useContent';
 
-function GalleryPage() {
-    const { gallery } = useContent();
+const GalleryPage = () => {
+    const content = useContent();
+    const [filter, setFilter] = useState('all');
+
+    if (!content) {
+        return <Container className="text-center my-5">Загрузка...</Container>;
+    }
+
+    const filteredImages = filter === 'all'
+        ? content.gallery
+        : content.gallery.filter(item => item.type === filter);
+
+    // Получаем уникальные типы работ для фильтрации
+    const uniqueTypes = ['all', ...new Set(content.gallery.map(item => item.type))];
 
     return (
-        <div className="p-4 max-w-5xl mx-auto">
-            <h2 className="text-3xl font-bold text-blue-800 text-center mb-8">Галерея проектов</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                {gallery.map((item, index) => (
-                    <div key={index} className="rounded shadow overflow-hidden">
-                        <img src={`/assets/${item.src}`} alt={item.type} className="w-full h-64 object-cover" />
-                        <div className="p-2 bg-blue-50 text-sm text-center text-blue-900 font-medium">{item.type}</div>
-                    </div>
-                ))}
+        <Container className="my-5">
+            <h1 className="text-center mb-4 text-primary">Галерея выполненных работ</h1> {/* Фотогалерея [cite: 9] */}
+
+            {/* Фильтрация по типам работ [cite: 9] */}
+            <div className="text-center mb-4">
+                <ButtonGroup aria-label="Фильтр галереи">
+                    {uniqueTypes.map((type, index) => (
+                        <Button
+                            key={index}
+                            variant={filter === type ? 'primary' : 'outline-primary'}
+                            onClick={() => setFilter(type)}
+                        >
+                            {type === 'all' ? 'Все' : type.charAt(0).toUpperCase() + type.slice(1)}
+                        </Button>
+                    ))}
+                </ButtonGroup>
             </div>
-        </div>
+
+            <Row className="g-4">
+                {filteredImages.map((image, index) => (
+                    <Col md={4} key={index}>
+                        <div className="shadow-sm rounded overflow-hidden" style={{ height: '250px' }}>
+                            <Image
+                                src={`/images/${image.src}`} // Убедитесь, что изображения находятся в папке public/images
+                                alt={image.type}
+                                fluid
+                                className="w-100 h-100"
+                                style={{ objectFit: 'cover' }}
+                            />
+                        </div>
+                    </Col>
+                ))}
+            </Row>
+        </Container>
     );
-}
+};
 
 export default GalleryPage;

@@ -1,38 +1,125 @@
-.App {
-  text-align: center;
+/* src/App.css */
+
+/* Общие стили */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa; /* Светлый фон */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Навигация */
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.8rem;
+  color: #007bff !important; /* Яркий синий для бренда */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.nav-link {
+  font-weight: 500;
+  margin-right: 15px;
+  color: rgba(255, 255, 255, 0.75) !important;
+  transition: color 0.3s ease;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.nav-link:hover {
+  color: #ffffff !important;
 }
 
-.App-link {
-  color: #61dafb;
+/* Секции заголовков */
+h1, h2, h3, h4, h5, h6 {
+  color: #343a40; /* Темный текст для заголовков */
+  font-weight: 600;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.text-primary {
+  color: #007bff !important; /* Яркий синий */
 }
+
+.text-secondary {
+  color: #6c757d !important; /* Серый */
+}
+
+.text-info {
+  color: #17a2b8 !important; /* Бирюзовый */
+}
+
+.text-success {
+  color: #28a745 !important; /* Зеленый */
+}
+
+/* Карточки */
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Кнопки */
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.btn-outline-primary {
+  color: #007bff;
+  border-color: #007bff;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Формы */
+.form-control:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+}
+
+/* Изображения */
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Футер */
+footer {
+  background-color: #343a40 !important; /* Темный фон футера */
+  color: #e9ecef;
+}
+
+footer h5 {
+  color: #007bff; /* Яркий синий для заголовков футера */
+  margin-bottom: 15px;
+}
+
+footer a {
+  color: #e9ecef;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: #007bff;
+}
+
+/* Дополнительные стили для секций */
+.bg-light {
+  background-color: #f8f9fa !important;
+}
+
+.bg-info {
+  background-color: #17a2b8 !important;
+}
+
+/* Иконки Font Awesome (если используются) */
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css");
